@@ -2,17 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { products } from "../../data/products";
 
-export default async function ProductDetailPage({ params }) {
+export default async function ProductDetailPage({ params, searchParams }) {
   const { id } = await params;
+  const product = await searchParams; // In Next.js 15+, searchParams is a promise
   
-  // Find product by ID or fallback to the first one if not found
-  const product = products.find(p => p.id === id) || products[0];
-
-  // For the gallery, use the main image and some fallbacks to mimic a gallery
-  const galleryImages = [
-    product.image,
-    ...products.filter(p => p.id !== product.id).map(p => p.image).slice(0, 3)
-  ];
+  // For the gallery, we'll just use the thumbnail since we passed it in the URL
+  const galleryImages = [product.thumbnail];
 
   return (
     <div className="bg-gray-50 min-h-screen py-8">

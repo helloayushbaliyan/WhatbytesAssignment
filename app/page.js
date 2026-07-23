@@ -3,7 +3,14 @@ import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import { products } from "./data/products";
 
-export default function Home() {
+export default async function Home() {
+  const res = await fetch("https://dummyjson.com/products?limit=7");
+  const data = await res.json();
+  const apiProducts = data.products;
+
+  const standardProducts = apiProducts.slice(0, 6);
+  const featuredProduct = apiProducts[6];
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="max-w-[95%] mx-auto px-4 sm:px-6 md:px-8 py-6">
@@ -28,15 +35,15 @@ export default function Home() {
                   </label>
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input type="radio" name="category" className="appearance-none w-5 h-5 rounded-full border-2 border-white/60 checked:bg-white checked:border-white cursor-pointer" />
-                    <span className="text-white/90 text-base">Electronics</span>
+                    <span className="text-white/90 text-base">Beauty</span>
                   </label>
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input type="radio" name="category" className="appearance-none w-5 h-5 rounded-full border-2 border-white/60 checked:bg-white checked:border-white cursor-pointer" />
-                    <span className="text-white/90 text-base">Clothing</span>
+                    <span className="text-white/90 text-base">Fragrances</span>
                   </label>
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input type="radio" name="category" className="appearance-none w-5 h-5 rounded-full border-2 border-white/60 checked:bg-white checked:border-white cursor-pointer" />
-                    <span className="text-white/90 text-base">Home</span>
+                    <span className="text-white/90 text-base">Furniture</span>
                   </label>
                 </div>
               </div>
@@ -61,35 +68,45 @@ export default function Home() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[3rem]">
 
-              {products.filter(p => !p.featured).map(product => (
+              {standardProducts.map(product => (
                 <ProductCard 
                   key={product.id}
-                  id={product.id}
-                  title={product.title} 
-                  price={product.price} 
-                  image={product.image} 
+                  product={product} 
                 />
               ))}
 
               {/* Featured Card */}
-              {products.filter(p => p.featured).map(featured => (
-                <Link key={featured.id} href={`/product/${featured.id}`} className="col-span-1 sm:col-span-2 bg-white rounded-xl shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-200">
+              {featuredProduct && (
+                <Link 
+                  href={{
+                    pathname: `/product/${featuredProduct.id}`,
+                    query: {
+                      title: featuredProduct.title,
+                      price: featuredProduct.price,
+                      description: featuredProduct.description,
+                      thumbnail: featuredProduct.thumbnail,
+                      category: featuredProduct.category,
+                      rating: featuredProduct.rating
+                    }
+                  }} 
+                  className="col-span-1 sm:col-span-2 bg-white rounded-xl shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-200"
+                >
                   <div className="relative w-full sm:w-56 h-56 sm:h-auto bg-gray-50 flex-shrink-0">
-                    <Image src={featured.image} alt={featured.title} fill className="object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
+                    <Image src={featuredProduct.thumbnail} alt={featuredProduct.title} fill className="object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="px-5 py-4 flex flex-col gap-2 flex-1">
-                    <h3 className="font-bold text-xl text-gray-900 group-hover:text-[#1a56a8] transition-colors">{featured.title}</h3>
-                    <p className="text-gray-900 font-bold text-lg">${featured.price}</p>
+                    <h3 className="font-bold text-xl text-gray-900 group-hover:text-[#1a56a8] transition-colors">{featuredProduct.title}</h3>
+                    <p className="text-gray-900 font-bold text-lg">${featuredProduct.price}</p>
                     {/* Star Rating */}
                     <div className="flex items-center gap-0.5">
                       {[...Array(5)].map((_, i) => (
-                        <svg key={i} viewBox="0 0 24 24" className={`w-5 h-5 ${i < Math.floor(featured.rating) ? 'fill-yellow-400 text-yellow-400' : 'fill-gray-200 text-gray-200'}`}>
+                        <svg key={i} viewBox="0 0 24 24" className={`w-5 h-5 ${i < Math.floor(featuredProduct.rating) ? 'fill-yellow-400 text-yellow-400' : 'fill-gray-200 text-gray-200'}`}>
                           <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
                         </svg>
                       ))}
                     </div>
-                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{featured.description}</p>
-                    <p className="text-gray-500 text-sm font-semibold mt-auto pt-2">Category: {featured.category}</p>
+                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{featuredProduct.description}</p>
+                    <p className="text-gray-500 text-sm font-semibold mt-auto pt-2 capitalize">Category: {featuredProduct.category}</p>
                     <button 
                       className="mt-2 w-full bg-[#1a56a8] hover:bg-[#154a90] text-white rounded-md py-2.5 text-sm font-semibold cursor-pointer transition-colors active:scale-95"
                     >
@@ -97,15 +114,13 @@ export default function Home() {
                     </button>
                   </div>
                 </Link>
-              ))}
+              )}
 
             </div>
           </main>
 
         </div>
       </div>
-
-
     </div>
   );
 }
