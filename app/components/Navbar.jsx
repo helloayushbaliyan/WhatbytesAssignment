@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Navbar() {
   const [search, setSearch] = useState("");
@@ -9,9 +10,9 @@ export default function Navbar() {
     <nav className="w-full bg-[#1a56a8] flex items-center justify-between gap-6 px-10 py-4">
 
       {/* Logo */}
-      <span className="text-white text-[44px] font-bold tracking-tight whitespace-nowrap select-none">
+      <Link href="/" className="text-white text-[44px] font-bold tracking-tight whitespace-nowrap select-none hover:text-gray-200 transition-colors">
         Logo
-      </span>
+      </Link>
 
       {/* Search Bar */}
       <div className="flex gap-6 items-center justify-end flex-1">
@@ -40,7 +41,7 @@ export default function Navbar() {
           />
         </div>
 
-        <button className="bg-[#0d2b52] hover:bg-[#0a2244] transition-colors text-white rounded-lg px-10 py-[15px] text-lg font-semibold flex items-center gap-2 whitespace-nowrap cursor-pointer">
+        <Link href="/cart" className="bg-[#0d2b52] hover:bg-[#0a2244] transition-colors text-white rounded-lg px-10 py-[15px] text-lg font-semibold flex items-center gap-2 whitespace-nowrap cursor-pointer">
           {/* Cart / Shopping Cart Icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +58,7 @@ export default function Navbar() {
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
           </svg>
           Cart
-        </button>
+        </Link>
       </div>
 
       {/* Cart Button */}
