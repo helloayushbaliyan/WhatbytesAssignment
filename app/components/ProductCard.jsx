@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import AddToCartButton from "./AddToCartButton";
 
 export default function ProductCard({ product }) {
   const { slug, title, price, image } = product;
@@ -21,9 +22,12 @@ export default function ProductCard({ product }) {
       <div className="px-4 pb-4 space-y-3 pt-2 flex flex-col gap-1 flex-1">
         <h3 className="text-gray-900 font-medium text-2xl">{title}</h3>
         <p className="text-gray-900 font-bold text-xl">${price}</p>
-        <button className="mt-auto w-full bg-[#1a56a8] hover:bg-[#154a90] text-white rounded-xl px-5 py-3 text-xl font-semibold cursor-pointer transition-colors active:scale-95">
+        <AddToCartButton
+          product={product}
+          className="mt-auto w-full bg-[#1a56a8] hover:bg-[#154a90] text-white rounded-xl px-5 py-3 text-xl font-semibold cursor-pointer transition-colors active:scale-95"
+        >
           Add to Cart
-        </button>
+        </AddToCartButton>
       </div>
     </Link>
   );

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import ProductCard from "./ProductCard";
+import AddToCartButton from "./AddToCartButton";
 import { products } from "../data/products";
 
 const ALL_CATEGORIES = ["All", ...new Set(products.map((p) => p.category))];
@@ -226,9 +227,12 @@ export default function ProductListing() {
                       <p className="text-gray-500 text-sm font-semibold mt-auto pt-2 capitalize">
                         Category: {featuredProduct.category}
                       </p>
-                      <button className="mt-2 w-full bg-[#1a56a8] hover:bg-[#154a90] text-white rounded-md py-2.5 text-sm font-semibold cursor-pointer transition-colors active:scale-95">
+                      <AddToCartButton
+                        product={featuredProduct}
+                        className="mt-2 w-full bg-[#1a56a8] hover:bg-[#154a90] text-white rounded-md py-2.5 text-sm font-semibold cursor-pointer transition-colors active:scale-95"
+                      >
                         Add to Cart
-                      </button>
+                      </AddToCartButton>
                     </div>
                   </Link>
                 )}
