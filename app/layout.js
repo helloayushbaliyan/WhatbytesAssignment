@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
@@ -13,7 +14,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="bg-gray-100 flex flex-col min-h-screen">
         <CartProvider>
-          <Navbar />
+          <Suspense>
+            <Navbar />
+          </Suspense>
           <main className="flex-1">
             {children}
           </main>
@@ -23,3 +26,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+

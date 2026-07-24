@@ -1,12 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCart } from "../context/CartContext";
 
 export default function Navbar() {
-  const [search, setSearch] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { totalItems, mounted } = useCart();
+
+  const search = searchParams.get("search") || "";
+
+  const handleSearch = useCallback(
+    (value) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value) {
+        params.set("search", value);
+      } else {
+        params.delete("search");
+      }
+      const qs = params.toString();
+      router.push(qs ? `/?${qs}` : "/");
+    },
+    [searchParams, router]
+  );
 
   return (
     <nav className="w-full bg-[#1a56a8] flex items-center justify-between gap-6 px-10 py-4">
@@ -37,9 +55,9 @@ export default function Navbar() {
           <input
             type="text"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search for products..."
-            className="w-full rounded-2xl  border-2 border-gray-300 outline-none py-[15px] pl-10 pr-5 text-lg text-gray-300 placeholder-gray-200 transition-colors"
+            className="w-full rounded-2xl border-2 border-gray-300 outline-none py-[15px] pl-10 pr-5 text-lg text-gray-300 placeholder-gray-200 transition-colors"
           />
         </div>
 
@@ -68,9 +86,6 @@ export default function Navbar() {
           )}
         </Link>
       </div>
-
-      {/* Cart Button */}
-
 
     </nav>
   );
