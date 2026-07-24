@@ -3,13 +3,9 @@ import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import { products } from "./data/products";
 
-export default async function Home() {
-  const res = await fetch("https://dummyjson.com/products?limit=7");
-  const data = await res.json();
-  const apiProducts = data.products;
-
-  const standardProducts = apiProducts.slice(0, 6);
-  const featuredProduct = apiProducts[6];
+export default function Home() {
+  const standardProducts = products.filter(p => !p.featured);
+  const featuredProduct = products.find(p => p.featured);
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -69,30 +65,20 @@ export default async function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[3rem]">
 
               {standardProducts.map(product => (
-                <ProductCard 
+                <ProductCard
                   key={product.id}
-                  product={product} 
+                  product={product}
                 />
               ))}
 
               {/* Featured Card */}
               {featuredProduct && (
-                <Link 
-                  href={{
-                    pathname: `/product/${featuredProduct.id}`,
-                    query: {
-                      title: featuredProduct.title,
-                      price: featuredProduct.price,
-                      description: featuredProduct.description,
-                      thumbnail: featuredProduct.thumbnail,
-                      category: featuredProduct.category,
-                      rating: featuredProduct.rating
-                    }
-                  }} 
+                <Link
+                  href={`/product/${featuredProduct.id}`}
                   className="col-span-1 sm:col-span-2 bg-white rounded-xl shadow-sm overflow-hidden flex flex-col sm:flex-row group hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-200"
                 >
                   <div className="relative w-full sm:w-56 h-56 sm:h-auto bg-gray-50 flex-shrink-0">
-                    <Image src={featuredProduct.thumbnail} alt={featuredProduct.title} fill className="object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
+                    <Image src={featuredProduct.image} alt={featuredProduct.title} fill className="object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="px-5 py-4 flex flex-col gap-2 flex-1">
                     <h3 className="font-bold text-xl text-gray-900 group-hover:text-[#1a56a8] transition-colors">{featuredProduct.title}</h3>
@@ -107,7 +93,7 @@ export default async function Home() {
                     </div>
                     <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{featuredProduct.description}</p>
                     <p className="text-gray-500 text-sm font-semibold mt-auto pt-2 capitalize">Category: {featuredProduct.category}</p>
-                    <button 
+                    <button
                       className="mt-2 w-full bg-[#1a56a8] hover:bg-[#154a90] text-white rounded-md py-2.5 text-sm font-semibold cursor-pointer transition-colors active:scale-95"
                     >
                       Add to Cart

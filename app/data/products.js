@@ -1,6 +1,7 @@
 export const products = [
   {
     id: "1",
+    slug: "wireless-headphones",
     title: "Wireless Headphones",
     price: 99,
     image: "/products/wireless-headphones.png",
@@ -12,6 +13,7 @@ export const products = [
   },
   {
     id: "2",
+    slug: "backpack",
     title: "Backpack",
     price: 129,
     image: "/products/backpack.png",
@@ -23,6 +25,7 @@ export const products = [
   },
   {
     id: "3",
+    slug: "smartwatch",
     title: "Smartwatch",
     price: 249,
     image: "/products/smartwatch.png",
@@ -34,6 +37,7 @@ export const products = [
   },
   {
     id: "4",
+    slug: "sunglasses",
     title: "Sunglasses",
     price: 149,
     image: "/products/sunglasses.png",
@@ -45,6 +49,7 @@ export const products = [
   },
   {
     id: "5",
+    slug: "digital-camera",
     title: "Digital Camera",
     price: 499,
     image: "/products/digital-camera.png",
@@ -56,6 +61,7 @@ export const products = [
   },
   {
     id: "6",
+    slug: "t-shirt",
     title: "T-shirt",
     price: 29,
     image: "/products/tshirt.png",
@@ -67,6 +73,7 @@ export const products = [
   },
   {
     id: "7",
+    slug: "smartphone",
     title: "Smartphone",
     price: 699,
     image: "/products/smartphone.png",
@@ -77,3 +84,4 @@ export const products = [
     featured: true
   }
 ];
+

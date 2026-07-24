@@ -2,17 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { products } from "../../data/products";
 
-export default async function ProductDetailPage({ params, searchParams }) {
+export default async function ProductDetailPage({ params }) {
   const { id } = await params;
-  const product = await searchParams; // In Next.js 15+, searchParams is a promise
-  
-  // For the gallery, we'll just use the thumbnail since we passed it in the URL
-  const galleryImages = [product.thumbnail];
+  const product = products.find(p => p.id === id);
+
+  if (!product) {
+    return <div className="min-h-screen flex items-center justify-center text-gray-500 text-xl">Product not found.</div>;
+  }
+
+  // For the gallery, we'll just use the image since we passed it in the URL
+  const galleryImages = [product.image];
 
   return (
     <div className="bg-gray-50 min-h-screen py-8">
       <div className="max-w-[95%] mx-auto px-4 sm:px-6 md:px-8">
-        
+
         {/* Breadcrumbs */}
         <nav className="flex text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-3">
@@ -22,7 +26,7 @@ export default async function ProductDetailPage({ params, searchParams }) {
             <li>
               <div className="flex items-center">
                 <svg className="w-3 h-3 mx-1 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                 </svg>
                 <span className="ml-1 md:ml-2 hover:text-[#1a56a8] transition-colors cursor-pointer">{product.category}</span>
               </div>
@@ -30,7 +34,7 @@ export default async function ProductDetailPage({ params, searchParams }) {
             <li aria-current="page">
               <div className="flex items-center">
                 <svg className="w-3 h-3 mx-1 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                 </svg>
                 <span className="ml-1 md:ml-2 text-gray-800 font-medium">{product.title}</span>
               </div>
@@ -41,20 +45,20 @@ export default async function ProductDetailPage({ params, searchParams }) {
         {/* Product Layout */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="flex flex-col lg:flex-row">
-            
+
             {/* Left: Image Section */}
             <div className="w-full lg:w-1/2 p-6 lg:p-10 border-b lg:border-b-0 lg:border-r border-gray-100 bg-gray-50/50">
               <div className="flex flex-col gap-6">
                 {/* Main Image */}
                 <div className="relative w-full aspect-square bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 p-8">
-                  <Image 
-                    src={galleryImages[0]} 
-                    alt={product.title} 
-                    fill 
-                    className="object-contain p-4 hover:scale-105 transition-transform duration-500" 
+                  <Image
+                    src={galleryImages[0]}
+                    alt={product.title}
+                    fill
+                    className="object-contain p-4 hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                
+
                 {/* Thumbnails */}
                 <div className="grid grid-cols-4 gap-4">
                   {galleryImages.map((img, index) => (
@@ -68,13 +72,13 @@ export default async function ProductDetailPage({ params, searchParams }) {
 
             {/* Right: Details Section */}
             <div className="w-full lg:w-1/2 p-6 lg:p-12 flex flex-col justify-center">
-              
+
               <div className="mb-2">
                 <span className="inline-block bg-[#1a56a8]/10 text-[#1a56a8] text-xs font-semibold px-3 py-1 rounded-full">
                   {product.category}
                 </span>
               </div>
-              
+
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
                 {product.title}
               </h1>
@@ -108,7 +112,7 @@ export default async function ProductDetailPage({ params, searchParams }) {
 
               {/* Actions: Quantity & Add to Cart */}
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                
+
                 {/* Quantity Selector */}
                 <div className="flex items-center border-2 border-gray-200 rounded-xl bg-white h-14 w-full sm:w-36 flex-shrink-0">
                   <button className="flex-1 flex justify-center items-center text-gray-500 hover:text-[#1a56a8] hover:bg-gray-50 h-full rounded-l-xl transition-colors">
