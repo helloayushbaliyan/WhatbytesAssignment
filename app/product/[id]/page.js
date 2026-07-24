@@ -4,7 +4,7 @@ import { products } from "../../data/products";
 
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
-  const product = products.find(p => p.id === id);
+  const product = products.find(p => p.slug === id);
 
   if (!product) {
     return <div className="min-h-screen flex items-center justify-center text-gray-500 text-xl">Product not found.</div>;
