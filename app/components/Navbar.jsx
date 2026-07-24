@@ -27,16 +27,16 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="w-full bg-[#1a56a8] flex items-center justify-between gap-6 px-10 py-4">
+    <nav className="w-full bg-[#1a56a8] flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 md:px-10 py-3 sm:py-4 flex-wrap">
 
       {/* Logo */}
-      <Link href="/" className="text-white text-[44px] font-bold tracking-tight whitespace-nowrap select-none hover:text-gray-200 transition-colors">
+      <Link href="/" className="text-white text-2xl sm:text-3xl md:text-[44px] font-bold tracking-tight whitespace-nowrap select-none hover:text-gray-200 transition-colors">
         Logo
       </Link>
 
       {/* Search Bar */}
-      <div className="flex gap-6 items-center justify-end flex-1">
-        <div className="relative flex-1 max-w-[480px]">
+      <div className="flex gap-3 sm:gap-6 items-center justify-end flex-1 min-w-0">
+        <div className="relative flex-1 max-w-[480px] min-w-0">
           {/* Search Icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,11 +57,11 @@ export default function Navbar() {
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search for products..."
-            className="w-full rounded-2xl border-2 border-gray-300 outline-none py-[15px] pl-10 pr-5 text-lg text-gray-300 placeholder-gray-200 transition-colors"
+            className="w-full rounded-2xl border-2 border-gray-300 outline-none py-2.5 sm:py-[15px] pl-10 pr-5 text-sm sm:text-lg text-gray-300 placeholder-gray-200 transition-colors"
           />
         </div>
 
-        <Link href="/cart" className="relative bg-[#0d2b52] hover:bg-[#0a2244] transition-colors text-white rounded-lg px-10 py-[15px] text-lg font-semibold flex items-center gap-2 whitespace-nowrap cursor-pointer">
+        <Link href="/cart" className="relative bg-[#0d2b52] hover:bg-[#0a2244] transition-colors text-white rounded-lg px-4 sm:px-10 py-2.5 sm:py-[15px] text-sm sm:text-lg font-semibold flex items-center gap-2 whitespace-nowrap cursor-pointer flex-shrink-0">
           {/* Cart / Shopping Cart Icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"

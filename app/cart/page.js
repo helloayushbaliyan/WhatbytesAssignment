@@ -30,7 +30,7 @@ export default function CartPage() {
 
         {items.length === 0 ? (
           /* Empty Cart State */
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-16 flex flex-col items-center justify-center text-center">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-16 flex flex-col items-center justify-center text-center">
             <svg className="w-20 h-20 text-gray-200 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="9" cy="21" r="1" strokeWidth={1.5} />
               <circle cx="20" cy="21" r="1" strokeWidth={1.5} />
@@ -63,7 +63,7 @@ export default function CartPage() {
                 {/* Items */}
                 <div className="flex flex-col">
                   {items.map((item) => (
-                    <div key={item.id} className="grid grid-cols-1 md:grid-cols-12 gap-4 p-6 border-b border-gray-100 items-center">
+                    <div key={item.id} className="relative grid grid-cols-1 md:grid-cols-12 gap-4 p-4 sm:p-6 border-b border-gray-100 items-center">
 
                       {/* Product Info */}
                       <div className="col-span-1 md:col-span-6 flex items-center gap-4">
@@ -105,7 +105,7 @@ export default function CartPage() {
                       </div>
 
                       {/* Remove Action */}
-                      <div className="absolute right-6 mt-4 md:mt-0 md:relative md:right-auto md:col-span-1 text-right">
+                      <div className="absolute right-4 top-4 md:relative md:right-auto md:top-auto md:col-span-1 text-right">
                         <button
                           onClick={() => removeFromCart(item.id)}
                           className="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50"
